@@ -1,0 +1,81 @@
+﻿@model IEnumerable<PassionProject_DentistAppointment.Models.VeteranDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .veteran-link {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #555;
+            font-size: 18px;
+        }
+
+            .veteran-link:hover {
+                color: #000;
+            }
+
+        /* Add border and border-bottom for box-like appearance and line separator */
+        .veteran-link {
+            border: 2px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9; /* Change background color to match .info */
+            color: #333; /* Change text color to match .label */
+        }
+
+            .veteran-link:hover {
+                color: #000; /* Change hover text color to match original */
+            }
+
+        .new-veteran-link {
+            display: inline-block;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+            .new-veteran-link:hover {
+                background-color: darkorange;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header">List</h2>
+        <a href="/Veteran/New" class="new-veteran-link">New Veteran</a><br />
+        @foreach (var veteran in Model)
+        {
+            <h2><a href="/Veteran/Details/@veteran.VeteranID" class="veteran-link">@veteran.VeteranName</a></h2>
+        }
+    </div>
+</body>
+</html>

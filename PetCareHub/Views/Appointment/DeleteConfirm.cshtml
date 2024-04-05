@@ -1,0 +1,58 @@
+﻿@model PassionProject_DentistAppointment.Models.AppointmentDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #c82333;
+            }
+    </style>
+</head>
+<body>
+    <h2>Are you sure you want to delete this Appointment?</h2>
+    <a href="/Appointment/List">Cancel</a>
+    <h2>@Model.AppointmentDate</h2>
+
+    <form action="/Appointment/Delete/@Model.AppointmentID" method="POST">
+        <input type="submit" value="Confirm Delete" />
+    </form>
+</body>
+</html>
