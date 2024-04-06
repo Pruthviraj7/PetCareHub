@@ -123,7 +123,7 @@ namespace PetCareHub.Controllers
         }
 
         // GET: Pet/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirm(int id)
         {
             string url = "PetsData/FindPet/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
@@ -133,7 +133,7 @@ namespace PetCareHub.Controllers
 
         // POST: Pet/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
@@ -153,9 +153,10 @@ namespace PetCareHub.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error");
             }
         }
+
 
         public ActionResult Error()
         {

@@ -40,32 +40,33 @@ namespace PassionProject_DentistAppointment.Controllers
         // GET: Veteran/Details/5
         public ActionResult Details(int id)
         {
-            string url = "veterandata/findveteran/" + id;
-            HttpResponseMessage response = client.GetAsync(url).Result;
+            string veteranUrl = "veterandata/findveteran/" + id;
+            HttpResponseMessage veteranResponse = client.GetAsync(veteranUrl).Result;
 
-            Debug.WriteLine("The response code is ");
-            Debug.WriteLine(response.StatusCode);
+            Debug.WriteLine("The response code for veteran is ");
+            Debug.WriteLine(veteranResponse.StatusCode);
 
-            VeteranDto selectedVeteran = response.Content.ReadAsAsync<VeteranDto>().Result;
+            VeteranDto selectedVeteran = veteranResponse.Content.ReadAsAsync<VeteranDto>().Result;
             Debug.WriteLine("Veteran received: ");
-            Debug.WriteLine(selectedVeteran.VeteranSpecialization);
+            Debug.WriteLine(selectedVeteran.VeteranName); // Example property for debugging, adjust as needed
 
             ViewBag.SelectedVeteran = selectedVeteran;
 
-            url = "appointmentsdata/listAppointmentForVeteran/" + id;
-            response = client.GetAsync(url).Result;
-            IEnumerable<AppointmentDto> bookedAppointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
+            string bookedAppointmentsUrl = "appointmentsdata/listAppointmentForVeteran/" + id;
+            HttpResponseMessage bookedAppointmentsResponse = client.GetAsync(bookedAppointmentsUrl).Result;
+            IEnumerable<AppointmentDto> bookedAppointments = bookedAppointmentsResponse.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
 
             ViewBag.BookedAppointments = bookedAppointments;
 
-            url = "appointmentsdata/listAppointmentNotForVeteran/" + id;
-            response = client.GetAsync(url).Result;
-            IEnumerable<AppointmentDto> availableAppointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
+            string availableAppointmentsUrl = "appointmentsdata/listAppointmentNotForVeteran/" + id;
+            HttpResponseMessage availableAppointmentsResponse = client.GetAsync(availableAppointmentsUrl).Result;
+            IEnumerable<AppointmentDto> availableAppointments = availableAppointmentsResponse.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
 
             ViewBag.AvailableAppointments = availableAppointments;
 
-            return View();
+            return View(selectedVeteran);
         }
+
 
 
 
@@ -110,27 +111,40 @@ namespace PassionProject_DentistAppointment.Controllers
         [HttpPost]
         public ActionResult Create(Veteran veteran)
         {
-            Debug.WriteLine("The JSON payload is:");
-            string url = "veterandata/addveteran";
-
-            string jsonPayload = jss.Serialize(veteran);
-
-            Debug.WriteLine(jsonPayload);
-
-            HttpContent content = new StringContent(jsonPayload);
-            content.Headers.ContentType.MediaType = "application/json";
-
-            HttpResponseMessage response = client.PostAsync(url, content).Result;
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return RedirectToAction("List");
+                string url = "veterandata/addveteran";
+
+                // Serialize the veteran object to JSON
+                string jsonPayload = jss.Serialize(veteran);
+                Debug.WriteLine(jsonPayload);
+
+                // Create the HTTP content with JSON payload
+                HttpContent content = new StringContent(jsonPayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                // Send the POST request to the API endpoint
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                // Check if the request is successful and redirect accordingly
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    Debug.WriteLine($"Failed to create veteran. Status code: {response.StatusCode}");
+                    return RedirectToAction("Error");
+                }
             }
-            else
+            catch (Exception ex)
             {
+                Debug.WriteLine($"An error occurred while creating veteran: {ex.Message}");
                 return RedirectToAction("Error");
             }
         }
+
+
 
         // GET: Veteran/Edit/5
         public ActionResult Edit(int id)
@@ -173,7 +187,6 @@ namespace PassionProject_DentistAppointment.Controllers
                 return View();
             }
         }
-
         // GET: Veteran/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
@@ -182,6 +195,38 @@ namespace PassionProject_DentistAppointment.Controllers
             VeteranDto selectedVeteran = response.Content.ReadAsAsync<VeteranDto>().Result;
             return View(selectedVeteran);
         }
+
+        // POST: Veteran/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                string url = "veterandata/deleteveteran/" + id;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+
+
+
+
+
 
     }
 }

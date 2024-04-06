@@ -67,6 +67,22 @@
         <div class="label">Specialization:</div>
         <div class="value">@Model.VeteranSpecialization</div>
     </div>
+    <div class="info">
+        <div class="label">Phone:</div>
+        <div class="value">@Model.VeteranPhone</div>
+    </div>
+    <div class="info">
+        <div class="label">Email:</div>
+        <div class="value">@Model.VeteranEmail</div>
+    </div>
+    <div class="info">
+        <div class="label">Address:</div>
+        <div class="value">@Model.VeteranAddress</div>
+    </div>
+    <div class="info">
+        <div class="label">Rating:</div>
+        <div class="value">@Model.VeteranRating</div>
+    </div>
     <form action="/Veteran/Delete/@Model.VeteranID" method="POST">
         <input type="submit" value="Confirm Delete" />
     </form>

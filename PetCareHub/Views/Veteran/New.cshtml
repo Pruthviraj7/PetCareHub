@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Veteran";
 }
 
 <!DOCTYPE html>
@@ -33,9 +33,7 @@
         }
 
         input[type="text"],
-        input[type="number"],
-        input[type="tel"],
-        input[type="email"] {
+        input[type="number"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
@@ -51,6 +49,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin-top: 15px;
         }
 
             input[type="submit"]:hover {
@@ -60,35 +59,35 @@
 </head>
 <body>
     <div class="container">
-        <h2 class="header">Create Dentist</h2>
-        <form id="dentistForm" action="/Veteran/New" method="POST" onsubmit="return validateForm()">
+        <h2 class="header">Create Veteran</h2>
+        <form id="veteranForm" action="/Veteran/Create" method="POST" onsubmit="return validateForm()">
             <div>
-                <label>Name:</label> <input type="text" name="DentistName" required />
+                <label>Name:</label> <input type="text" name="VeteranName" required />
             </div>
             <div>
-                <label>Specialization:</label> <input type="text" name="Specialization" required />
+                <label>Specialization:</label> <input type="text" name="VeteranSpecialization" required />
             </div>
             <div>
-                <label>Phone:</label> <input type="tel" name="Phone" required />
+                <label>Phone:</label> <input type="text" name="VeteranPhone" required />
             </div>
             <div>
-                <label>Email:</label><input type="email" name="Email" required />
+                <label>Email:</label> <input type="text" name="VeteranEmail" required />
             </div>
             <div>
-                <label>Address:</label><input type="text" name="Address" required />
+                <label>Address:</label> <input type="text" name="VeteranAddress" required />
             </div>
             <div>
-                <label>Rating:</label><input type="number" name="Rating" required />
+                <label>Rating:</label> <input type="number" name="VeteranRating" step="0.01" required />
             </div>
             <div>
-                <input type="submit" value="Add Dentist" />
+                <input type="submit" value="Add Veteran" />
             </div>
         </form>
     </div>
 
     <script>
         function validateForm() {
-            var form = document.getElementById('dentistForm');
+            var form = document.getElementById('veteranForm');
             if (!form.checkValidity()) {
                 // If the form is invalid, display appropriate error messages
                 form.reportValidity();

@@ -155,47 +155,47 @@
     <div class="container">
         <a href="/Veteran/List" class="back-link">Go back to list</a>
         <br />
-        <a href="/Veteran/Edit/@Model.SelectedVeteran.VeteranID" class="update-link">Update</a>
+        <a href="/Veteran/Edit/@Model.VeteranID" class="update-link">Update</a>
         <br />
-        <a href="/Veteran/DeleteConfirm/@Model.SelectedVeteran.VeteranID" class="delete-link">Delete</a>
+        <a href="/Veteran/DeleteConfirm/@Model.VeteranID" class="delete-link">Delete</a>
         <br />
-        <h2 class="veteran-name">@Model.SelectedVeteran.VeteranName</h2>
+        <h2 class="veteran-name">@Model.VeteranName</h2>
         <div class="info">
             <div class="label">Specialization:</div>
-            <div class="value">@Model.SelectedVeteran.VeteranSpecialization</div>
+            <div class="value">@Model.VeteranSpecialization</div>
         </div>
         <div class="info">
             <div class="label">Phone:</div>
-            <div class="value">@Model.SelectedVeteran.VeteranPhone</div>
+            <div class="value">@Model.VeteranPhone</div>
         </div>
         <div class="info">
             <div class="label">Email:</div>
-            <div class="value">@Model.SelectedVeteran.VeteranEmail</div>
+            <div class="value">@Model.VeteranEmail</div>
         </div>
         <div class="info">
             <div class="label">Address:</div>
-            <div class="value">@Model.SelectedVeteran.VeteranAddress</div>
+            <div class="value">@Model.VeteranAddress</div>
         </div>
         <div class="info">
             <div class="label">Rating:</div>
-            <div class="value">@Model.SelectedVeteran.VeteranRating</div>
+            <div class="value">@Model.VeteranRating</div>
         </div>
     </div>
     <div class="appointments-section">
-        <h2>Appointments available for <span class="veteran-name">@Model.SelectedVeteran.VeteranName</span>:</h2>
-        @foreach (var appointment in Model.BookedAppointments)
+        <h2>Appointments available for <span class="veteran-name">@Model.VeteranName</span>:</h2>
+        @foreach (var appointment in ViewBag.BookedAppointments)
         {
             <div class="appointment">
-                <a>@appointment.AppointmentDate</a>
-                <a class="cancel-link" href="/veteran/Unassociate/@Model.SelectedVeteran.VeteranID?AppointmentID=@appointment.AppointmentID">[x]</a>
+                <span class="appointment-date">@appointment.AppointmentDate</span>
+                <a class="cancel-link" href="/Veteran/UnAssociate/@Model.VeteranID?AppointmentID=@appointment.AppointmentID">[x]</a>
             </div>
         }
 
         <div class="new-appointment-section">
-            <h4>Post a new Appointment for <span class="veteran-name">@Model.SelectedVeteran.VeteranName</span></h4>
-            <form method="POST" action="/Veteran/Associate/@Model.SelectedVeteran.VeteranID">
+            <h4>Post a new Appointment for <span class="veteran-name">@Model.VeteranName</span></h4>
+            <form method="POST" action="/Veteran/Associate/@Model.VeteranID">
                 <select name="AppointmentID" class="appointment-dropdown">
-                    @foreach (var appointment in Model.AvailableAppointments)
+                    @foreach (var appointment in ViewBag.AvailableAppointments)
                     {
                         <option value="@appointment.AppointmentID">@appointment.AppointmentDate</option>
                     }
